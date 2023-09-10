@@ -62,7 +62,11 @@ class Order(Base):
     __tablename__ = 'orders'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.user_id'))
-    delivery_location = Column(String(200))  # Add a column for delivery location
+    delivery_location = Column(String(200))  
+
+    #relationships
+    user = relationship("User", back_populates="orders")
+    cart_entries = relationship("Shopping_Cart", back_populates="order")
 
 
 
