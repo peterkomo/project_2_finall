@@ -50,6 +50,23 @@ class Shopping_Cart(Base):
     order_id = Column(Integer, ForeignKey('orders.id'))  # Add a foreign key reference to Order
     order = relationship("Order", back_populates="cart_entries")
 
+#pickup point table
+class PickupPoint(Base):
+        __tablename__ = 'pickup_points'
+        id = Column(Integer, primary_key=True)
+        name = Column(String(100))
+        address = Column(String(200))
+        contact = Column(String(100))
+#table for order
+class Order(Base):
+    __tablename__ = 'orders'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.user_id'))
+    delivery_location = Column(String(200))  # Add a column for delivery location
+
+
+
+
 
 
 
