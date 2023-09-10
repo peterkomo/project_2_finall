@@ -43,5 +43,13 @@ class Shopping_Cart(Base):
     user_id = Column(Integer, ForeignKey('users.user_id'))
     quantity = Column(Integer)
 
+    
+    #established relationships
+    user = relationship("User", back_populates="cart_items")
+    product = relationship("Product", back_populates="cart_entries")
+    order_id = Column(Integer, ForeignKey('orders.id'))  # Add a foreign key reference to Order
+    order = relationship("Order", back_populates="cart_entries")
+
+
 
 
