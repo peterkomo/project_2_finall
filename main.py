@@ -81,7 +81,11 @@ def create_new_user():
     usr_uc = input("Surname: ")
     usr_lc = input("Login Code: ")
 
+    new_user = User(user_first_name=usr_fn, user_second_name=usr_sn, user_surname=usr_uc, user_login_code=usr_lc)
+    session.add(new_user)
+    session.commit()
 
+    #his line of code constructs a User object with the user's personal information and login code.
 
 
 
