@@ -19,3 +19,11 @@ class User(Base):# users class defining user table
 cart_items = relationship('Shopping_Cart', back_populates='user')
 orders = relationship('Order', back_populates='user')
 #established one tomany relationships
+
+#product table
+class Product(Base):
+    __tablename__ = 'products'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50))
+    quantity = Column(Integer)
+    price = Column(Float)
