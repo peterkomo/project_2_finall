@@ -27,3 +27,21 @@ class Product(Base):
     name = Column(String(50))
     quantity = Column(Integer)
     price = Column(Float)
+    #
+    # foreign key reference to PickupPoint
+    pickup_point_id = Column(Integer, ForeignKey('pickup_points.id'))
+    pickup_point = relationship("PickupPoint")
+
+    #one to many relationship with shoppng cart
+    cart_entries = relationship("Shopping_Cart", back_populates="product")
+
+#shopping cart table
+class Shopping_Cart(Base):
+    __tablename__ = 'shopping_cart'
+    id = Column(Integer, primary_key=True)
+    product_id = Column(Integer, ForeignKey('products.id'))
+    user_id = Column(Integer, ForeignKey('users.user_id'))
+    quantity = Column(Integer)
+
+
+
