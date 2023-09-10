@@ -6,13 +6,13 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 #declarative base for sql alchemy
 
-class User(Base):# users class defining user table 
+class User(Base):
     __tablename__ = 'users'
     user_id = Column(Integer, primary_key=True)
     user_first_name = Column(String(50))
     user_second_name = Column(String(50))
     user_surname = Column(String(50))
-    user_email = Column(String(100), unique=True)
+    user_login_code = Column(String(10), unique=True)  # Change from user_email to user_login_code
     role = Column(String(20), default='customer')
     unique_code = Column(String(10))
 
