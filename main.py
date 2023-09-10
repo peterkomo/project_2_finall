@@ -68,6 +68,16 @@ class Order(Base):
     user = relationship("User", back_populates="orders")
     cart_entries = relationship("Shopping_Cart", back_populates="order")
 
+engine = create_engine('sqlite:///unclepetesglosary.db')
+Base.metadata.create_all(engine)# cratin class definations to intaract with the clas es
+Session = sessionmaker(bind=engine)
+session = Session()# session maker to connect with engene
+
+
+
+
+
+
 
 
 
