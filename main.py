@@ -5,3 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 #declarative base for sql alchemy
+
+cart_items = relationship('Shopping_Cart', back_populates='user')
+orders = relationship('Order', back_populates='user')
+#established one tomany relationships
