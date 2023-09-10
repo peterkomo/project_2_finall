@@ -74,7 +74,12 @@ Session = sessionmaker(bind=engine)
 session = Session()# session maker to connect with engene
 
 
-
+def create_new_user():
+    print("Please add your details:")
+    usr_fn = input("First Name: ")
+    usr_sn = input("Second Name: ")
+    usr_uc = input("Surname: ")
+    usr_lc = input("Login Code: ")
 
 
 
