@@ -199,6 +199,21 @@ def view_shopping_cart(user):
             print("Order not placed. Returning to the main menu.")
 
 
+#prompts the user to place oreds and  a series of questions on it
+def place_order(user, total_cost, delivery_location):
+    till_number = "12458"
+    print(f"Order placed successfully! Your till number is: {till_number}")
+    clear_shopping_cart(user)
+    print(f"Your order will be delivered to: {delivery_location}")
+    print("Thanks for shopping with us!")
+
+
+#enable user to clear shopping cart
+def clear_shopping_cart(user):
+    session.query(Shopping_Cart).filter_by(user_id=user.user_id).delete()
+    session.commit()        
+
+
 
 
 
