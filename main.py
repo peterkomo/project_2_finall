@@ -277,6 +277,21 @@ def browse_products(user):
         else:
             print("Product not found. Please enter a valid product ID.")
 
+def add_to_shopping_cart(user, product, quantity):
+    # Check if the same product is already in the user's shopping cart
+    cart_entry = session.query(Shopping_Cart).filter_by(user_id=user.user_id, product_id=product.id).first()
+
+    if cart_entry:
+        # If the product is already in the cart, update the quantity
+        cart_entry.quantity += quantity
+    else:
+        # If the product is not in the cart, create a new cart entry for the user
+        new_cart_entry = Shopping_Cart(user=user, product=product, quantity=quantity)
+        session.add(new_cart_entry)
+
+    # Commit the changes to the database, saving the updated shopping cart
+    session.commit()
+
 
 
 
