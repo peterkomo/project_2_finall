@@ -87,6 +87,40 @@ def create_new_user():
 
     #his line of code constructs a User object with the user's personal information and login code.
 
+    user = session.query(User).filter_by(user_login_code=usr_lc).first()  
+    new_user_code = f"s{usr_fn[0]}{usr_sn[0]}{user.user_id}{usr_uc[-1]}"
+    user.unique_code = new_user_code
+    session.commit()
+   # retrieve a user based on their login code, generate a unique code for that user, update the user's unique code in the database, and then commit the changes to the database to persist the updated unique code for that user.
+    print(f"Thank you for registering with us. Your login code is {usr_lc}") 
+    
+def create_product():
+    # Prompt the user to enter details for a new product.
+    print("Please add product details:")
+
+    # Get the product name from the user and store it in the product_name variable.
+    product_name = input("Product Name: ")
+
+    # Get the product quantity from the user and convert it to an integer, storing it in product_quantity.
+    product_quantity = int(input("Product Quantity: "))
+
+    # Get the product price from the user and convert it to a float, storing it in product_price.
+    product_price = float(input("Product Price: "))
+
+    # Create a new Product object with the provided name, quantity, and price.
+    new_product = Product(name=product_name, quantity=product_quantity, price=product_price)
+
+    # Add the new_product to the database session for later insertion into the database.
+    session.add(new_product)
+
+    # Commit the changes made in the session to save the new product in the database.
+    session.commit()
+
+    # Display a confirmation message with the details of the newly created product.
+    print(f"Product {product_name} with quantity {product_quantity} and price ${product_price:.2f} has been created.")
+ 
+
+
 
 
 
