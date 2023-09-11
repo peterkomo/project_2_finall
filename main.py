@@ -213,6 +213,24 @@ def clear_shopping_cart(user):
     session.query(Shopping_Cart).filter_by(user_id=user.user_id).delete()
     session.commit()
 
+def shopping_menu(user):
+    while True:
+        print("\nShopping Menu:")
+        print("1. Browse Products")
+        print("2. View Shopping Cart")
+        print("3. Exit")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            browse_products(user)
+        elif choice == "2":
+            view_shopping_cart(user)
+        elif choice == "3":
+            break
+        else:
+            print("Invalid choice. Please choose a valid option.")    
+
 def browse_products(user):
     # Display a header for available products
     print("\nAvailable Products:")
@@ -292,6 +310,32 @@ def add_to_shopping_cart(user, product, quantity):
     # Commit the changes to the database, saving the updated shopping cart
     session.commit()
 
+
+def main():
+    print("Welcome to Uncle Pete's groceries system")
+    print("Are you an existing member?")
+    print("1. Yes")
+    print("2. No")
+
+    get_choice = input("Choose one: ")
+
+    if get_choice == "1":
+        usr_lc = input("Please enter your login code: ")
+        user = session.query(User).filter_by(user_login_code=usr_lc).first()
+        if user:
+            print(f"Welcome back, {user.user_first_name}!")
+            shopping_menu(user)
+        else:
+            print("User not found.")
+    elif get_choice == "2":
+        create_new_user()
+    else:
+        print("Invalid choice. Please choose 1 or 2.")
+
+if __name__ == "__main__":
+    add_dummy_pickup_points()
+    add_dummy_products()
+    main()
 
 
 
