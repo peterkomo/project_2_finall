@@ -162,6 +162,44 @@ def add_dummy_products():
     session.commit()
 
 
+def view_shopping_cart(user):
+    # Print the user's shopping cart header
+    print(f"Shopping Cart for {user.user_first_name} {user.user_surname}:")
+
+    # Query the database for cart entries associated with the user
+    cart_entries = session.query(Shopping_Cart).filter_by(user_id=user.user_id).all()
+
+    # Check if the shopping cart is empty
+    if not cart_entries:
+        print("Your shopping cart is empty.")
+    else:
+        total_cost = 0
+
+        # Loop through each cart entry and display product information
+        for cart_entry in cart_entries:
+            product = cart_entry.product
+            subtotal = cart_entry.quantity * product.price
+            total_cost += subtotal
+
+            # Print product details and subtotal for each item in the cart
+            print(f"Product: {product.name}, Quantity: {cart_entry.quantity}, Subtotal: ${subtotal:.2f}")
+
+        # Display the total cost of items in the shopping cart
+        print(f"Total Cost: ${total_cost:.2f}")
+
+        # Ask the user if they want to place an order
+        place_order_option = input("Do you want to place an order? (yes/no): ").strip().lower()
+        
+        # If the user chooses to place an order, prompt for the delivery location
+        if place_order_option == "yes":
+            delivery_location = input("Enter the delivery location: ")
+            place_order(user, total_cost, delivery_location)
+        else:
+            # If the user chooses not to place an order, inform them and return to the main menu
+            print("Order not placed. Returning to the main menu.")
+
+
+
 
 
 
