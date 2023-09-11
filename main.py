@@ -137,6 +137,31 @@ def add_dummy_pickup_points():
     # Commit the changes made in the session to save the pickup points in the database.
     session.commit()
 
+def add_dummy_products():
+    # Define two pickup points representing stores
+    store_a = PickupPoint(name="Store A", address="123 Main St", contact="Phone: (123) 456-7890")
+    store_b = PickupPoint(name="Store B", address="456 Elm St", contact="Phone: (987) 654-3210")
+
+    # Define a list of dictionaries with product information
+    dummy_products = [
+        {"name": "Apple", "quantity": 100, "price": 1.00, "pickup_point": store_a},
+        {"name": "Banana", "quantity": 50, "price": 0.75, "pickup_point": store_b},
+        {"name": "Orange", "quantity": 75, "price": 1.25, "pickup_point": store_a},
+    ]
+
+    # Loop through the list of dummy products
+    for product_info in dummy_products:
+        # Create a Product object for each product
+        product = Product(name=product_info["name"], quantity=product_info["quantity"],
+                          price=product_info["price"], pickup_point=product_info["pickup_point"])
+
+        # Add the product to the current session
+        session.add(product)
+
+    # Commit the changes to the database
+    session.commit()
+
+
 
 
 
