@@ -119,6 +119,24 @@ def create_product():
     # Display a confirmation message with the details of the newly created product.
     print(f"Product {product_name} with quantity {product_quantity} and price ${product_price:.2f} has been created.")
  
+def add_dummy_pickup_points():
+    # Define a list of dummy pickup point information as dictionaries.
+    dummy_pickup_points = [
+        {"name": "Store A", "address": "ngong depot", "contact": "Phone: 0756349023"},
+        {"name": "Store B", "address": "rabai depot", "contact": "Phone: 0756342034"},
+    ]
+
+    # Iterate over each dictionary in the list.
+    for point_info in dummy_pickup_points:
+        # Create a new PickupPoint object using the information from the current dictionary.
+        pickup_point = PickupPoint(name=point_info["name"], address=point_info["address"], contact=point_info["contact"])
+
+        # Add the new pickup_point to the database session.
+        session.add(pickup_point)
+
+    # Commit the changes made in the session to save the pickup points in the database.
+    session.commit()
+
 
 
 
