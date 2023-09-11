@@ -211,7 +211,73 @@ def place_order(user, total_cost, delivery_location):
 #enable user to clear shopping cart
 def clear_shopping_cart(user):
     session.query(Shopping_Cart).filter_by(user_id=user.user_id).delete()
-    session.commit()        
+    session.commit()
+
+def browse_products(user):
+    # Display a header for available products
+    print("\nAvailable Products:")
+    
+    # Retrieve all products from the database
+    products = session.query(Product).all()
+
+    # Check if there are no products available
+    if not products:
+        print("No products available.")
+        return
+
+    # Iterate through each product and display its details
+    for product in products:
+        print(f"ID: {product.id}, Name: {product.name}, Quantity: {product.quantity}, Price: ${product.price:.2f}, Pick-up Point: {product.pickup_point.name}")
+
+    # Create an infinite loop to allow the user to select products to add to the cart
+    while True:
+        # Prompt the user to enter the ID of the product they want to add to the cart
+        product_id = input("Enter the ID of the product you want to add to your cart (0 to exit): ")
+
+        # Check if the user wants to exit (0)
+        if product_id == "0":
+            return
+        
+        # Check if the input is not a valid integer
+        elif not product_id.isdigit():
+            print("Invalid input. Please enter a valid product ID.")
+            continue
+
+        # Convert the product ID to an integer
+        product_id = int(product_id)
+
+        # Retrieve the product from the database based on the entered ID
+        product = session.query(Product).filter_by(id=product_id).first()
+        
+        # Check if the product exists
+        if product:
+            # Create an inner loop to allow the user to specify the quantity of the product
+            while True:
+                # Prompt the user to enter the quantity
+                quantity = input("Enter the quantity: ")
+
+                # Check if the input is not a valid integer
+                if not quantity.isdigit():
+                    print("Invalid input. Please enter a valid quantity.")
+                    continue
+
+                # Convert the quantity to an integer
+                quantity = int(quantity)
+
+                # Check if the entered quantity is valid
+                if quantity <= 0:
+                    print("Quantity must be greater than 0.")
+                elif quantity > product.quantity:
+                    print("Insufficient quantity available.")
+                else:
+                    # Call the 'add_to_shopping_cart' function to add the product to the user's cart
+                    add_to_shopping_cart(user, product, quantity)
+                    print(f"{quantity} {product.name} added to your shopping cart.")
+                    break
+        else:
+            print("Product not found. Please enter a valid product ID.")
+
+
 
 
 
